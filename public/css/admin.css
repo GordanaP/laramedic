@@ -1,0 +1,96 @@
+.main-container {font-family: "Roboto" sans-serif; font-size: 13px; color: #777}
+
+/*
+ * DataTable
+ */
+.card-header#datatableCardHeader {border-bottom: 1px solid #dee2e6; padding-right: 28px;}
+.card-header#datatableCardHeader h1 {font-family: "Roboto" sans-serif}
+.card-header#datatableCardHeader button {font-family: "Roboto" sans-serif}
+.dataTables_length select{ font-size: 13px}
+.dataTable thead i { color: #a6a6a6 }
+.dataTable .btn-link-delete {padding: 0; border:none; height: 24px}
+.dataTable .btn-edit {padding: 0; border:none; height: 24px;}
+.dataTable.no-footer { border-bottom: 1px solid #e6e6e6  !important; }
+.dataTable tr td:first-child {text-align: center;}
+.dataTable tr td:last-child {text-align: center;}
+.pagination li.page-item a.page-link{border: none}
+.pagination li.page-item.active a.page-link {background: #EF5753; border-radius: 0}
+
+
+/*.dataTables_wrapper {font-size: 13px; font-family: "Roboto"; color: #777}*/
+/*.dataTables_length {font-family: "Roboto" sans-serif; font-size: 13px; }*/
+/*.dataTable tbody tr td.highlight,
+.dataTable tr.even:hover,
+.dataTable tr.even:hover td.sorting_1,
+.dataTable tr.odd:hover,
+.dataTable tr.odd:hover td.sorting_1 {
+    background: #f5f8fc !important;
+}
+*/
+
+/* Highlight the sorting column */
+/*td.sorting_1 { background: #F8F9FA }
+td.sorting_1:hover { background: #d2d9df !important }*/
+
+/*
+ * DataTable responsive
+ */
+.dataTable td.details-control {
+    background: url('https://datatables.net/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+.dataTable tr.shown td.details-control {
+    background: url('https://datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+.dataTable ul.dtr-details li:last-child { display: flex; align-items: center }
+.dataTable tbody td.highlight, table.dataTable tbody tr:hover { background-color: #f0f1f4 !important; }
+
+
+/*
+ * Select2
+ */
+input.select2-search__field {width: 100% !important; font-size:12px !important; font-family: "Roboto" sans-serif !important;}
+.select2-selection__rendered, .select2-results__option.select2-results__message { margin-left: 8px !important;}
+.select2-selection--multiple { background: red; border-radius: 0 !important; border: 1px solid #ccd0d2 !important;}
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border-radius: 0;
+  border-color: #CC1F1A !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+  outline: 0;
+}
+
+/*
+ * SweetAlert2
+ */
+.swal2-popup {border-radius: 0!important;}
+button.swal2-confirm, button.swal2-cancel {border-radius: 0!important;}
+button.swal2-cancel {background: #EF5753 !important; border-radius: 0!important;}
+button.swal2-confirm {background: #9CCC65 !important; border-radius: 0!important;}
+.swal2-icon.swal2-warning {color:#EF5753 !important; border: 1px solid #EF5753 !important; }
+/*.swal2-modal .swal2-styled:focus { // removes outilne from butons!
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}*/
+
+
+.admin-modal-input:focus {
+    border-color: #CC1F1A !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) ;
+    outline: 0 ;
+}
+
+ .admin-modal-button { font-size: 16px }
+
+/* Card buttons */
+/*.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+ button#editRole:focus, button#deleteRole:focus {background: none !important; color: #C25451; box-shadow: none !important;}
+.btn-delete {background: none; border: none; color: #C25451}
+.btn-delete:hover {background: none; border: none; color: #c32232; font-weight: bold}
+*/
+
+.invalid-select2 {
+  border: 1px solid #dc3545;
+}
+
+.role_id.form-control.req_place.select2-hidden-accessible.is-invalid { background-color: red}

@@ -1,0 +1,9 @@
+body { font-family: 'Roboto', sans-serif; font-size: 14px; color: #555 }
+/*.main-container {font-family: 'Roboto', sans-serif; color: #555;}*/
+
+.card { border-radius: 0 }
+.btn-indigo:focus { box-shadow: 0 0 0 0.2rem   rgba(178, 183, 255, .5) ;}
+.btn-orange { background: #F57522; border: 1px solid  #f4680b;}
+.btn-orange:focus { box-shadow: 0 0 0 0.2rem   rgba(245, 117, 34, .5) ;}
+.bg-petroleum { background: #1E8496 }
+.list-group-active { color:  #26a9c0; }
