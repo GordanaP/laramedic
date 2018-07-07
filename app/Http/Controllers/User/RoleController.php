@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Role;
+use App\User;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -91,5 +92,13 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
+    }
+
+
+    public function revoke(Request $request, User $user)
+    {
+        $user -> revokeRole($request->role_id);
+
+        return message('The role has been revoked');
     }
 }

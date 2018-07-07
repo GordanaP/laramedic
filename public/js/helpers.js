@@ -37,6 +37,20 @@ function roleNames(roles)
     return tempArray;
 }
 
+function getAdminRoleId(roles)
+{
+  var roleId;
+
+  $.each(roles, function(key, role) {
+
+    if (role.name == 'admin') {
+      roleId = role.id;
+    }
+  })
+
+  return roleId;
+}
+
 /**
  * Determine if the user has admin privileges.
  *

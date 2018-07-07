@@ -53,9 +53,12 @@ trait HasRoles
      */
     public function revokeRole($role)
     {
-        $roles = Role::whereIn('id', $role)->get();
+        $roleToRevoke = Role::find($role);
 
-        $this->roles()->detach($roles);
+        if ($this->is_admin && $roleToRevoke->name == 'admin')
+        {
+            $this->roles()->detach($roleToRevoke);
+        }
     }
 
     /**

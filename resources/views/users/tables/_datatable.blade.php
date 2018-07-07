@@ -25,7 +25,7 @@ var datatable = table.DataTable({
         {
             data: 'roles',
             render: function(data, type, row, meta) {
-                var html = ' <a href="#" data-user="' + row.id + '" data-name="' + row.name + '" id="editRoles"><span class="text-red-light">Revoke</span></a>';
+                var html = ' <a href="#" data-user="' + row.id + '" data-role="' + getAdminRoleId(data) +'" id="revokeRole"><span class="text-red-light">Revoke</span></a>';
                 return roleNames(data).length > 0 ? (roleNames(data) + revokeLinkIfAdmin(data, html)) : '';
             }
         },

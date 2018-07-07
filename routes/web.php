@@ -18,7 +18,7 @@ Auth::routes();
 /**
  * User
  */
-Route::prefix('settings')->namespace('User')->name('users.')->group(function() {
+Route::namespace('User')->name('users.')->group(function() {
     /**
      * Account
      */
@@ -52,6 +52,7 @@ Route::prefix('admin')->namespace('User')->name('admin.')->group(function(){
     /**
      * Role
      */
+    Route::delete('/revoke-role/{user}', 'RoleController@revoke')->name('roles.revoke');
     Route::resource('roles', 'RoleController');
 });
 

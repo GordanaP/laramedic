@@ -57,5 +57,8 @@
         // Delete with swal popoup
         @include('users.js._delete');
 
+        // Revoke admin role
+        @include('users.js._revoke_role');
+
     </script>
 @endsection
