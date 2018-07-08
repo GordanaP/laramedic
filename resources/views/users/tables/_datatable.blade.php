@@ -18,7 +18,7 @@ var datatable = table.DataTable({
         {
             data: 'name',
             render: function(data, type, row, meta) {
-                return '<a href="#" class="text-red-light" data-toggle="tooltip" data-placement="right" title="Click to see the profile">' + data +'</a>'
+                return '<a href="/admin/profiles/' + row.profile.slug +'/edit" class="text-red-light" data-toggle="tooltip" data-placement="right" title="Click to see the profile">' + data +'</a>'
             }
         },
         { data: 'email' },
@@ -62,10 +62,10 @@ var datatable = table.DataTable({
             data: 'id',
             visible: false
         },
-        // {
-        //     data: 'profile.slug',
-        //     visible: false
-        // },
+        {
+            data: 'profile.slug',
+            visible: false
+        },
     ],
     "order": [[1, 'asc']],
     responsive: true,

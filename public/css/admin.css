@@ -3,9 +3,9 @@
 /*
  * DataTable
  */
-.card-header#datatableCardHeader {border-bottom: 1px solid #dee2e6; padding-right: 28px;}
-.card-header#datatableCardHeader h1 {font-family: "Roboto" sans-serif}
-.card-header#datatableCardHeader button {font-family: "Roboto" sans-serif}
+.admin-card-header {border-bottom: 1px solid #dee2e6; padding-right: 28px;}
+.admin-card-header h1 {font-family: "Roboto" sans-serif}
+.admin-card-header button {font-family: "Roboto" sans-serif}
 .dataTables_length select{ font-size: 13px}
 .dataTable thead i { color: #a6a6a6 }
 .dataTable .btn-link-delete {padding: 0; border:none; height: 24px}
@@ -15,8 +15,6 @@
 .dataTable tr td:last-child {text-align: center;}
 .pagination li.page-item a.page-link{border: none}
 .pagination li.page-item.active a.page-link {background: #EF5753; border-radius: 0}
-
-
 /*.dataTables_wrapper {font-size: 13px; font-family: "Roboto"; color: #777}*/
 /*.dataTables_length {font-family: "Roboto" sans-serif; font-size: 13px; }*/
 /*.dataTable tbody tr td.highlight,
@@ -25,9 +23,7 @@
 .dataTable tr.odd:hover,
 .dataTable tr.odd:hover td.sorting_1 {
     background: #f5f8fc !important;
-}
-*/
-
+}*/
 /* Highlight the sorting column */
 /*td.sorting_1 { background: #F8F9FA }
 td.sorting_1:hover { background: #d2d9df !important }*/
@@ -73,7 +69,6 @@ button.swal2-confirm {background: #9CCC65 !important; border-radius: 0!important
     box-shadow: none;
 }*/
 
-
 .admin-modal-input:focus {
     border-color: #CC1F1A !important;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) ;
@@ -94,3 +89,7 @@ button.swal2-confirm {background: #9CCC65 !important; border-radius: 0!important
 }
 
 .role_id.form-control.req_place.select2-hidden-accessible.is-invalid { background-color: red}
+
+.card.admin ul#displayProfileSchedule li.list-group-item:first-child,
+.card.admin ul#displayProfileSchedule li.list-group-item:last-child { border-radius: 0; }
+.card.admin ul#displayProfileSchedule li.list-group-item {border-right: none; border-left: none; color: #999; }

@@ -28,7 +28,10 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        //
+        // return $profile;
+        return view('profiles.edit')->with([
+            'profile' => $profile,
+        ]);
     }
 
     /**

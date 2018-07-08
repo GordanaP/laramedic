@@ -25,7 +25,7 @@ class AccountController extends Controller
 
         if (request()->ajax()) {
 
-            return [ 'data' => $users->load('roles') ];
+            return [ 'data' => $users->load('roles', 'profile') ];
         }
 
         return view('users.index', compact('users', 'roles'));

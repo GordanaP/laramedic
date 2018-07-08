@@ -1,4 +1,4 @@
-<div class="card-header p-3 flex justify-between align-center" id="datatableCardHeader">
+<div class="card-header admin-card-header p-3 flex justify-between align-center">
 
     <h1 class="font-medium text-4xl ml-3 mb-0">Users</h1>
 
