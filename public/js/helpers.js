@@ -1,4 +1,3 @@
-
 /**
  * Remove error on inserting the new value.
  *
@@ -605,4 +604,83 @@ function iconNotification(element, message, type='warn') {
   element.mouseout(function(){
     $(".notifyjs-wrapper").fadeOut();
   })
+}
+
+/**
+ * Make a new array
+ *
+ * @param  {array} fields
+ * @return {array}
+ */
+function makeNewArray(fields)
+{
+    var tempArray = []
+
+    $.each(fields, function(index, field) {
+
+        tempArray.push(field.id);
+
+        tempArray.sort();
+    });
+
+    return tempArray;
+}
+
+/**
+ * Find missing value in a sequence of values
+ *
+ * @param  {array} array
+ * @return {int}
+ */
+function findMissingValue(array)
+{
+    var missing;
+
+    for(var i=1;i<=array.length;i++)
+    {
+       if(array[i-1] != i) {
+
+            missing = i;
+            break;
+       }
+    }
+
+    return i
+}
+
+/**
+ * Replace value with a new one
+ *
+ * @param  {int} oldValue
+ * @param  {int} newValue
+ * @return {int}
+ */
+function replaceValue(oldValue, newValue) {
+    return oldValue.replace(/\d+/, newValue);
+}
+
+/**
+ * Create a schedule template clone
+ *
+ * @param  {string} template
+ * @param  {string} templateHolder
+ * @param  {int} index
+ * @return {string}
+ */
+function cloneScheduleTemplate(template, templateHolder, index)
+{
+  var cloned = template.clone().appendTo(templateHolder)
+      .find('label').text('Day ' + (index+1)).end()
+      .find('.flex').each(function(){
+          index > 0 ? $(this).addClass('field') : '';
+          this.id = index;
+      }).end()
+      .find('select').attr("name", function() {
+          this.name = replaceValue(this.name, index);
+      }).end()
+      .find(':input').each(function(){
+          this.name = replaceValue(this.name, index);
+      }).end();
+
+    return cloned;
 }

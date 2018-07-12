@@ -4,7 +4,7 @@
             Schedule
         </span>
 
-        <button class="btn btn-warning btn-link tracking-wide pull-right py-1 px-2 btn-schedule" value="{{ $profile->slug }}">
+        <button class="btn btn-warning btn-link tracking-wide pull-right py-1 px-2" id="{{ $profile->hasSchedule() ? 'editSchedule' : 'addSchedule' }}" value="{{ $profile->slug }}">
             {{ $profile->hasSchedule() ? 'Change' : 'Add' }}
         </button>
     </p>

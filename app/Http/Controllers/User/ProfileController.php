@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Day;
 use App\Http\Controllers\Controller;
 use App\Profile;
 use App\User;
@@ -15,9 +16,13 @@ class ProfileController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Profile $profile)
     {
-        //
+        if (request()->ajax()) {
+            return response([
+                'profile' => $profile->load('days')
+            ]);
+        }
     }
 
     /**
@@ -28,9 +33,11 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        // return $profile;
+        $days = Day::all();
+
         return view('profiles.edit')->with([
             'profile' => $profile,
+            'days' => $days,
         ]);
     }
 
