@@ -669,8 +669,9 @@ function replaceValue(oldValue, newValue) {
  */
 function cloneScheduleTemplate(template, templateHolder, index)
 {
-  var cloned = template.clone().appendTo(templateHolder)
-      .find('label').text('Day ' + (index+1)).end()
+    var cloned = template.clone().appendTo(templateHolder)
+      // .find('label').text('Add day' + (index+1)).end()
+      .find('label').text('').end()
       .find('.flex').each(function(){
           index > 0 ? $(this).addClass('field') : '';
           this.id = index;
@@ -679,8 +680,50 @@ function cloneScheduleTemplate(template, templateHolder, index)
           this.name = replaceValue(this.name, index);
       }).end()
       .find(':input').each(function(){
+          this.value = '';
           this.name = replaceValue(this.name, index);
       }).end();
 
     return cloned;
+}
+
+/**
+ * Get chunked array values
+ *
+ * @param  {string} inputArrayName
+ * @param  {integer} chunkSize
+ * @return {array}
+ */
+function getChunks(arrayName, chunkSize)
+{
+    var values = $( "select[name*="+ arrayName +"], input[name*="+ arrayName +"]" ).map(function() {
+        return this.value;
+    }).get()
+
+    var chunks = chunkArray(values, chunkSize);
+
+    return chunks;
+}
+
+/**
+ * Chunk an array
+ *
+ * @param  {array} myArray
+ * @param  {int} chunkSize
+ * @return {array}
+ */
+function chunkArray(myArray, chunkSize)
+{
+    var index = 0;
+    var arrayLength = myArray.length;
+    var tempArray = [];
+
+    for (index = 0; index < arrayLength; index += chunkSize) {
+
+        myChunk = myArray.slice(index, index+chunkSize);
+
+        tempArray.push(myChunk);
+    }
+
+    return tempArray;
 }
