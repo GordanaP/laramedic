@@ -39,20 +39,20 @@ trait HasSchedule
     /**
      * Create or update profile's schedule
      *
-     * @param  array $subjects
+     * @param  array $days
      * @return void
      */
-    public function assignSchedule($data)
+    public function createOrUpdateSchedule($days)
     {
-        $schedule = $this->daysArray($data);
+        $workingDays = $this->workingDaysArray($days);
 
         if ($this->hasSchedule())
         {
-            $this->days()->sync($schedule);
+            $this->days()->sync($workingDays);
         }
         else
         {
-            $this->days()->attach($schedule);
+            $this->days()->attach($workingDays);
         }
     }
 
@@ -62,41 +62,54 @@ trait HasSchedule
      * @param  array $data
      * @return array
      */
-    protected function daysArray($data)
+    protected function workingDaysArray($array)
     {
-        $daysCollection = $this->daysCollection($data);
+        $fields = $this->dayArrayKeys();
 
-        $days = $daysCollection->mapWithKeys(function ($day) {
+        $daysCollection = $this->daysCollection($array);
 
+        $working_days = $daysCollection->mapWithKeys(function ($day) use($fields) {
             return [
-                $day['day_id'] => [
-                    'start_at' => $day['start_at'],
-                    'end_at' => $day['end_at'],
+                $day[$fields[0]] => [
+                    $fields[1] => $day[$fields[1]],
+                    $fields[2] => $day[$fields[2]],
                 ]
             ];
         });
 
-        return $days->all();
+        return $working_days->all();
     }
 
     /**
      * Collect day array fields
      *
-     * @param  array $data
+     * @param  array $array
      * @return array
      */
-    protected function daysCollection($data)
+    protected function daysCollection($array)
     {
-        $daysArray = [];
+        $fields = $this->dayArrayKeys();
+        $days = [];
 
-        for ($i=0; $i < sizeof($data) ; $i++)
+        for ($i=0; $i < sizeof($array) ; $i++)
         {
-            if ($data[$i]['day_id'])
+            if ($array[$i][$fields[0]])
             {
-                array_push($daysArray, $data[$i]);
+                array_push($days, $array[$i]);
             }
         }
 
-        return collect($daysArray);
+        return collect($days);
     }
+
+    /**
+     * Get day array keys
+     *
+     * @return array
+     */
+    protected function dayArrayKeys()
+    {
+        return ['day_id', 'start_at', 'end_at'];
+    }
+
 }

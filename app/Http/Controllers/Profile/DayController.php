@@ -1,8 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Profile;
 
 use App\Day;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\DayRequest;
+use App\Profile;
 use Illuminate\Http\Request;
 
 class DayController extends Controller
@@ -64,12 +67,39 @@ class DayController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Day  $day
+     * @param  \App\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Day $day)
+    public function update(DayRequest $request, Profile $profile)
     {
-        //
+        $days =  $request->all();
+
+        $keys = [];
+
+        for ($i=0; $i < sizeof($days['day']); $i++)
+        {
+              $a = [
+                'day_id' => $days['day'][$i],
+                'start_at' => $days['start'][$i],
+                'end_at' => $days['end'][$i]
+            ];
+
+            if ($a['day_id']) {
+                array_push($keys,$a);
+            };
+        }
+
+        if ($profile->days->count())
+         {
+            $profile->days()->sync($keys);
+         }
+         else
+         {
+            $profile->days()->attach($keys);
+         }
+
+
+        return message('done');
     }
 
     /**

@@ -305,11 +305,11 @@ $.fn.setAutofocus = function(field)
      {
          var formattedError = error.replace(/\./g , "-");
 
-         // var field = $("."+formattedError);
-         // var feedback = $("span."+formattedError).show();
+         var field = $("."+formattedError);
+         var feedback = $("span."+formattedError).show();
 
-         var field = $("."+error)
-         var feedback = $("span."+error).show()
+         // var field = $("."+error)
+         // var feedback = $("span."+error).show()
 
          // Attach server side validation
          displayServerError(field, feedback, errors[error][0]);
@@ -612,7 +612,7 @@ function iconNotification(element, message, type='warn') {
  * @param  {array} fields
  * @return {array}
  */
-function makeNewArray(fields)
+function getIdsArray(fields)
 {
     var tempArray = []
 
@@ -632,7 +632,7 @@ function makeNewArray(fields)
  * @param  {array} array
  * @return {int}
  */
-function findMissingValue(array)
+function getMissingValue(array)
 {
     var missing;
 
@@ -667,25 +667,48 @@ function replaceValue(oldValue, newValue) {
  * @param  {int} index
  * @return {string}
  */
-function cloneScheduleTemplate(template, templateHolder, index)
+function cloneScheduleTemplate(template, container, index)
 {
-    var cloned = template.clone().appendTo(templateHolder)
-      // .find('label').text('Add day' + (index+1)).end()
-      .find('label').text('').end()
-      .find('.flex').each(function(){
-          index > 0 ? $(this).addClass('field') : '';
-          this.id = index;
-      }).end()
-      .find('select').attr("name", function() {
-          this.name = replaceValue(this.name, index);
-      }).end()
-      .find(':input').each(function(){
-          this.value = '';
-          this.name = replaceValue(this.name, index);
-      }).end();
+    var cloned = template.clone().attr('id', index)
+        .find('label.day').text('Day #'+(index+1)).end()
+        .find(':input').each(function(){
+            this.value = '';
+        }).end()
+        .find('span.invalid-feedback').text("").end()
+        .find('.day').removeClass("day-0").addClass("day-" + index).end()
+        .find('.start').removeClass("start-0").addClass("start-"+ index).end()
+        .find('.end').removeClass("end-0").addClass("end-"+ index).end()
+        .sort(sortEm)
+        .appendTo(container)
 
-    return cloned;
+     return cloned;
 }
+
+/**
+ * Create multidimensional array
+ *
+ * @param  {string} inputArrayName
+ * @param  {integer} chunkSize
+ * @return {array}                [multidimensional array]
+ */
+function createScheduleArray(arrayName, chunkSize)
+{
+    var chunks = getChunks(arrayName, chunkSize)
+
+    var days = [];
+
+    for (var i = 0; i < chunks.length; i++) {
+
+        days[i] = {
+            'day_id': chunks[i][0],
+            'start_at': chunks[i][1],
+            'end_at': chunks[i][2],
+        }
+    }
+
+    return days;
+}
+
 
 /**
  * Get chunked array values
@@ -726,4 +749,42 @@ function chunkArray(myArray, chunkSize)
     }
 
     return tempArray;
+}
+
+
+function sortEm(a,b) {
+    return +a.getAttribute('id') - +b.getAttribute('id');
+}
+
+
+function addRow(container, counter, maxRows)
+{
+    var rows = container.children();
+    var template = rows.first();
+    var totalRows = rows.length;
+    var dynamicRows = rows.not(":first");
+    var dynamicRowsIds = getIdsArray(dynamicRows);
+    var index = getMissingValue(dynamicRowsIds);
+
+    counter++;
+
+    if (totalRows < maxRows) {
+        var clonedRows = cloneScheduleTemplate(template, container, index)
+    }
+
+    return clonedRows;
+}
+
+
+function removeRow(button)
+{
+    button.parents().eq(2).remove();
+
+    $('fieldset').each(function(i) {
+        $(this).attr('id', i)
+        .find('label.day').text('Day #'+(i+1)).end()
+        .find('.day').removeClass('day-'+(i+1)).addClass('day-'+ i).end()
+        .find('.start').removeClass('start-'+ (i+1)).addClass('start-'+ i).end()
+        .find('.end').removeClass('end-'+ (i+1)).addClass('end-'+ i)
+    });
 }

@@ -49,19 +49,23 @@ Route::prefix('admin')->namespace('User')->name('admin.')->group(function(){
      * Profile
      */
     Route::get('profiles/{profile}', 'ProfileController@show')->name('profiles.show');
-    Route::put('profiles/{profile}', 'ProfileController@update')->name('profiles.update');
     Route::get('profiles/{profile}/edit', 'ProfileController@edit')->name('profiles.edit');
-
-    // Route::resource('/profiles', 'ProfileController', [
-    //     'parameters' => ['profiles' => 'user'],
-    //     'only' => ['update']
-    // ]);
+    Route::resource('/profiles', 'ProfileController', [
+        'parameters' => ['profiles' => 'user'],
+        'only' => ['update']
+    ]);
 
     /**
      * Role
      */
     Route::delete('/revoke-role/{user}', 'RoleController@revoke')->name('roles.revoke');
     Route::resource('roles', 'RoleController');
+});
+
+Route::prefix('admin')->namespace('Profile')->name('admin.')->group(function(){
+    Route::resource('/schedule', 'DayController', [
+        'parameters' => ['schedule' => 'profile'],
+    ]);
 });
 
 /**

@@ -48,10 +48,8 @@ class ProfileController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Request $request, User $user)
     {
-        $profile->assignSchedule($request->days);
-
-        return message('Schedule changes saved.');
+        //
     }
 }

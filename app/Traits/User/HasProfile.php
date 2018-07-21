@@ -16,12 +16,37 @@ trait HasProfile
         return $this->hasOne(Profile::class);
     }
 
+    // public function assignProfile($data)
+    // {
+    //     $profile = $this->profile ?: new Profile;
+
+    //     if($data['first_name'] && $data['last_name'] && $data['title']) {
+
+    //         $profile->title = $data['title'];
+    //         $profile->first_name = $data['first_name'];
+    //         $profile->last_name = $data['last_name'];
+    //     }
+
+    //     $this->profile()->save($profile);
+    // }
+
     /**
-     * Assign a profile to a user.
+     * Create the profile slug during profile update.
      *
-     * @param  array $data
-     * @return \App\Profile
+     * @param  \App\User $user
+     * @param  string $name
+     * @return string
      */
+    // protected function getSlug($profile, $first_name, $last_name)
+    // {
+    //     $currentName = getFullName($profile->first_name, $profile->last_name);
+    //     $newName = getFullName($first_name, $last_name);
+
+    //     $slug = $newName == $currentName ?  $profile->slug : Profile::uniqueNameSlug($newName);
+
+    //     return $slug;
+    // }
+    //
     public function assignProfile($data)
     {
         $profile = $this->profile ?: new Profile;
