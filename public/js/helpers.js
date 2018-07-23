@@ -195,8 +195,6 @@ $.fn.setAutofocus = function(field)
          .find(checked_field).prop('checked', true)
 
      hidden_field ? hidden_field.hide() : ''
-
-
   }
 
  /**
@@ -612,19 +610,19 @@ function iconNotification(element, message, type='warn') {
  * @param  {array} fields
  * @return {array}
  */
-function getIdsArray(fields)
-{
-    var tempArray = []
+// function getIdsArray(array)
+// {
+//     var tempArray = []
 
-    $.each(fields, function(index, field) {
+//     $.each(array, function(index, item) {
 
-        tempArray.push(field.id);
+//         tempArray.push(item.id);
 
-        tempArray.sort();
-    });
+//         tempArray.sort();
+//     });
 
-    return tempArray;
-}
+//     return tempArray;
+// }
 
 /**
  * Find missing value in a sequence of values
@@ -632,21 +630,21 @@ function getIdsArray(fields)
  * @param  {array} array
  * @return {int}
  */
-function getMissingValue(array)
-{
-    var missing;
+// function getMissingValue(array)
+// {
+//     var missing;
 
-    for(var i=1;i<=array.length;i++)
-    {
-       if(array[i-1] != i) {
+//     for(var i=1;i<=array.length;i++)
+//     {
+//        if(array[i-1] != i) {
 
-            missing = i;
-            break;
-       }
-    }
+//           missing = i;
+//           break;
+//        }
+//     }
 
-    return i
-}
+//     return i;
+// }
 
 /**
  * Replace value with a new one
@@ -655,9 +653,9 @@ function getMissingValue(array)
  * @param  {int} newValue
  * @return {int}
  */
-function replaceValue(oldValue, newValue) {
-    return oldValue.replace(/\d+/, newValue);
-}
+// function replaceValue(oldValue, newValue) {
+//     return oldValue.replace(/\d+/, newValue);
+// }
 
 /**
  * Create a schedule template clone
@@ -667,22 +665,27 @@ function replaceValue(oldValue, newValue) {
  * @param  {int} index
  * @return {string}
  */
-function cloneScheduleTemplate(template, container, index)
-{
-    var cloned = template.clone().attr('id', index)
-        .find('label.day').text('Day #'+(index+1)).end()
-        .find(':input').each(function(){
-            this.value = '';
-        }).end()
-        .find('span.invalid-feedback').text("").end()
-        .find('.day').removeClass("day-0").addClass("day-" + index).end()
-        .find('.start').removeClass("start-0").addClass("start-"+ index).end()
-        .find('.end').removeClass("end-0").addClass("end-"+ index).end()
-        .sort(sortEm)
-        .appendTo(container)
+// function cloneTemplate(template, container, index)
+// {
+//   var cloned = template.clone()
+//     .attr('id', index)
+//     .find('label.day').text('Day #'+(index+1)).end()
+//     .find("select").each(function(){
+//         this.name = replaceValue(this.name, index)
+//     }).end()
+//     .find(':input').each(function(){
+//         this.value = '';
+//         this.name = replaceValue(this.name, index)
+//     }).end()
+//     .find('span.invalid-feedback').text("").end()
+//     .find('.day').removeClass("day-0").addClass("day-" + index).end()
+//     .find('.start').removeClass("start-0").addClass("start-"+ index).end()
+//     .find('.end').removeClass("end-0").addClass("end-"+ index).end()
+//     .sort(sortId)
+//     .appendTo(container);
 
-     return cloned;
-}
+//   return cloned;
+// }
 
 /**
  * Create multidimensional array
@@ -751,40 +754,81 @@ function chunkArray(myArray, chunkSize)
     return tempArray;
 }
 
-
-function sortEm(a,b) {
+function sortId(a,b) {
     return +a.getAttribute('id') - +b.getAttribute('id');
 }
 
+// function addRow(container, counter, maxRows)
+// {
+//     var rows = container.children();
+//     var template = rows.first();
+//     var totalRows = rows.length;
+//     var dynamicRows = rows.not(":first");
+//     var dynamicRowsIds = getIdsArray(dynamicRows);
+//     var index = getMissingValue(dynamicRowsIds);
+//     counter++;
 
-function addRow(container, counter, maxRows)
+//     if (totalRows < maxRows) {
+//         var addedRow = cloneTemplate(template, container, index)
+//     }
+
+//     return addedRow;
+// }
+
+// function removeRow(button)
+// {
+//   button.parents().eq(2).remove();
+
+//   $('fieldset').each(function(i) {
+//     $(this).attr('id', i)
+//     .find('label.day').text('Day #'+(i+1)).end()
+//     .find("select").each(function(){
+//         this.name = replaceValue(this.name, i)
+//     }).end()
+//     .find(':input').each(function() {
+//         this.name = replaceValue(this.name, i)
+//     }).end()
+//     .find('.day').removeClass('day-'+(i+1)).addClass('day-'+ i).end()
+//     .find('.start').removeClass('start-'+ (i+1)).addClass('start-'+ i).end()
+//     .find('.end').removeClass('end-'+ (i+1)).addClass('end-'+ i)
+//   });
+// }
+
+// function getValuesArray(array)
+// {
+//   var tempArray = [];
+
+//   $.each(array, function(index, item)
+//   {
+//       tempArray.push(item.value);
+//   });
+
+//   return tempArray;
+// }
+
+function selectArrayValues(arrayName)
 {
-    var rows = container.children();
-    var template = rows.first();
-    var totalRows = rows.length;
-    var dynamicRows = rows.not(":first");
-    var dynamicRowsIds = getIdsArray(dynamicRows);
-    var index = getMissingValue(dynamicRowsIds);
+    var selects = $( "select[name*="+ arrayName +"]" );
 
-    counter++;
+    var values = getValuesArray(selects);
 
-    if (totalRows < maxRows) {
-        var clonedRows = cloneScheduleTemplate(template, container, index)
-    }
-
-    return clonedRows;
+    return values;
 }
 
-
-function removeRow(button)
+function inputArrayValues(arrayName)
 {
-    button.parents().eq(2).remove();
+    var inputs = $( "input[name*="+ arrayName +"]" );
 
-    $('fieldset').each(function(i) {
-        $(this).attr('id', i)
-        .find('label.day').text('Day #'+(i+1)).end()
-        .find('.day').removeClass('day-'+(i+1)).addClass('day-'+ i).end()
-        .find('.start').removeClass('start-'+ (i+1)).addClass('start-'+ i).end()
-        .find('.end').removeClass('end-'+ (i+1)).addClass('end-'+ i)
-    });
+    var values = getValuesArray(inputs);
+
+    return values;
+}
+
+function getMappedArray(arrayName)
+{
+    var values = $( "select[name*="+ arrayName +"], input[name*="+ arrayName +"]" ).map(function() {
+        return this.value;
+    }).get();
+
+    return values;
 }

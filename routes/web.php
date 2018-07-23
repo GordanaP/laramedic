@@ -62,6 +62,9 @@ Route::prefix('admin')->namespace('User')->name('admin.')->group(function(){
     Route::resource('roles', 'RoleController');
 });
 
+/**
+ * Day
+ */
 Route::prefix('admin')->namespace('Profile')->name('admin.')->group(function(){
     Route::resource('/schedule', 'DayController', [
         'parameters' => ['schedule' => 'profile'],

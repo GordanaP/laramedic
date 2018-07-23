@@ -72,32 +72,7 @@ class DayController extends Controller
      */
     public function update(DayRequest $request, Profile $profile)
     {
-        $days =  $request->all();
-
-        $keys = [];
-
-        for ($i=0; $i < sizeof($days['day']); $i++)
-        {
-              $a = [
-                'day_id' => $days['day'][$i],
-                'start_at' => $days['start'][$i],
-                'end_at' => $days['end'][$i]
-            ];
-
-            if ($a['day_id']) {
-                array_push($keys,$a);
-            };
-        }
-
-        if ($profile->days->count())
-         {
-            $profile->days()->sync($keys);
-         }
-         else
-         {
-            $profile->days()->attach($keys);
-         }
-
+        $profile->assignSchedule($request->day, $request->start, $request->end);
 
         return message('done');
     }
@@ -112,4 +87,6 @@ class DayController extends Controller
     {
         //
     }
+
+
 }

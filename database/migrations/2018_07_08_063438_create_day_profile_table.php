@@ -15,6 +15,8 @@ class CreateDayProfileTable extends Migration
     {
         Schema::create('day_profile', function (Blueprint $table) {
 
+            $table->increments('id');
+
             $table->unsignedInteger('profile_id');
             $table->foreign('profile_id')->references('id')->on('profiles')->onDelete('cascade');
 
@@ -24,7 +26,6 @@ class CreateDayProfileTable extends Migration
             $table->string('start_at')->nullable();
             $table->string('end_at')->nullable();
 
-            $table->primary(['profile_id', 'day_id']);
         });
     }
 

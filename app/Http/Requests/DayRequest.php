@@ -25,11 +25,12 @@ class DayRequest extends FormRequest
     {
         return [
             'day' => 'array|max:6',
-            'start' => 'array|max:6',
+            'start`' => 'array|max:6',
             'end' => 'array|max:6',
             'day.*' => 'required|exists:days,index|distinct',
             'start.*' => 'nullable|date_format:H:i',
             'end.*' => 'nullable|date_format:H:i',
+
         ];
     }
 

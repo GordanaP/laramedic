@@ -36,80 +36,52 @@ trait HasSchedule
         return $this->days->count();
     }
 
-    /**
-     * Create or update profile's schedule
-     *
-     * @param  array $days
-     * @return void
-     */
-    public function createOrUpdateSchedule($days)
+    protected function getMultiArray($days, $starts, $ends)
     {
-        $workingDays = $this->workingDaysArray($days);
+        $assocArray = [];
+        $multiArray = [];
 
-        if ($this->hasSchedule())
-        {
-            $this->days()->sync($workingDays);
+        for ($i = 0; $i < sizeof($days); $i++) {
+
+            $assocArray[$i] = [
+                'day_id' => $days[$i],
+                'start_at' => $starts[$i],
+                'end_at' => $ends[$i],
+            ];
+
+            array_push($multiArray, $assocArray[$i]);
         }
-        else
-        {
-            $this->days()->attach($workingDays);
-        }
+
+        return $multiArray;
     }
 
-    /**
-     * Create a multidimensional array
-     *
-     * @param  array $data
-     * @return array
-     */
-    protected function workingDaysArray($array)
+    protected function getMappedCollection($days, $starts, $ends)
     {
-        $fields = $this->dayArrayKeys();
+        $collection = collect($this->getMultiArray($days, $starts, $ends));
 
-        $daysCollection = $this->daysCollection($array);
-
-        $working_days = $daysCollection->mapWithKeys(function ($day) use($fields) {
+        $days = $collection->mapWithKeys(function ($day) {
             return [
-                $day[$fields[0]] => [
-                    $fields[1] => $day[$fields[1]],
-                    $fields[2] => $day[$fields[2]],
+                $day['day_id'] => [
+                    'start_at' => $day['start_at'],
+                    'end_at' => $day['end_at'],
                 ]
             ];
         });
 
-        return $working_days->all();
+        return $days->all();
     }
 
-    /**
-     * Collect day array fields
-     *
-     * @param  array $array
-     * @return array
-     */
-    protected function daysCollection($array)
+    public function assignSchedule($days, $starts, $ends)
     {
-        $fields = $this->dayArrayKeys();
-        $days = [];
+        $schedule = $this->getMappedCollection($days, $starts, $ends);
 
-        for ($i=0; $i < sizeof($array) ; $i++)
+        if ($this->hasSchedule())
         {
-            if ($array[$i][$fields[0]])
-            {
-                array_push($days, $array[$i]);
-            }
+            $this->days()->sync($schedule);
         }
-
-        return collect($days);
+        else
+        {
+            $this->days()->attach($schedule);
+        }
     }
-
-    /**
-     * Get day array keys
-     *
-     * @return array
-     */
-    protected function dayArrayKeys()
-    {
-        return ['day_id', 'start_at', 'end_at'];
-    }
-
 }

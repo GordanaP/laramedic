@@ -50,39 +50,5 @@
 @section('scripts')
     <script>
 
-        var scheduleModal = $('#scheduleModal');
-        var scheduleSection = $('#scheduleSection');
-        var addRow = $('#addRow');
-        var row = $('.day-row');
-        var rowLast = $('.day-row:last');
-        var dynRow = $('.dynamic')
-        var totalRows = dynRow.length
-        var maxRows = 4
-
-        $(document).on('click', '#addSchedule', function(){
-            scheduleModal.modal('show')
-        })
-
-        var i = 0;
-
-        addRow.on('click', function() {
-
-            var rows = $('.dynamic')
-            var totalRows = rows.length
-            var maxRows = 3
-
-            if (totalRows < maxRows) {
-
-                i ++;
-
-                var html = '<div class="form-group dynamic"><label>Day #1</label><div class="flex day-row" id="field-0"><select type="text" class="form-control mr-1" name="day[0][day_id]"><option value="">Select a day</option></select><input type="text" class="form-control mr-1" placeholder="00:00" name="day[0][start_at]"><input type="text" class="form-control mr-1" placeholder="00:00" name="day[0][end_at]"><button type="button" class="btn btn-default bg-grey btn-schedule" id="addRow"><i class="fa fa-plus"></i></button></div></div>';
-            }
-
-
-            $('#scheduleSection').append(html);
-
-
-        });
-
     </script>
 @endsection
