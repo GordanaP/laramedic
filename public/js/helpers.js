@@ -348,11 +348,11 @@ $.fn.setAutofocus = function(field)
   */
  function clearError(name)
  {
-     var field = $("."+name);
-     var feedback = $("span."+name).hide();
+    var field = $("."+name);
+    var feedback = $("span."+name).hide();
 
-     field.removeClass('is-invalid');
-     feedback.text('');
+    field.removeClass('is-invalid');
+    feedback.text('');
  }
 
  /**
@@ -364,12 +364,12 @@ $.fn.setAutofocus = function(field)
   */
  function toggleHiddenFieldWithRadio(checked, hidden)
  {
-     $('input:radio').on('change', function() {
+    $('input:radio').on('change', function() {
 
-         var value = this.value;
+        var value = this.value;
 
-         value == checked.val() ? hidden.show() : hidden.hide().val('')
-     });
+        value == checked.val() ? hidden.show() : hidden.hide().val('')
+    });
  }
 
 
@@ -382,11 +382,11 @@ $.fn.setAutofocus = function(field)
   */
  function toggleHiddenFieldWithCheckbox(hidden)
  {
-     $('input:checkbox').on('change', function() {
+    $('input:checkbox').on('change', function() {
 
-         this.checked ? hidden.hide().val('') : hidden.show();
+        this.checked ? hidden.hide().val('') : hidden.show();
 
-     });
+    });
  }
 
  /**
@@ -397,13 +397,13 @@ $.fn.setAutofocus = function(field)
   */
  function getUserRoles(roles)
  {
-     var roleIds = []
+    var roleIds = []
 
-     $.each(roles, function(key, role) {
-         roleIds.push(role.id)
-     })
+    $.each(roles, function(key, role) {
+        roleIds.push(role.id)
+    })
 
-     return roleIds
+    return roleIds
  }
 
  /**
@@ -413,19 +413,19 @@ $.fn.setAutofocus = function(field)
   */
  function changePassword(checkedRadio, checkedManual, checkedAuto, profilePassword)
  {
-     var auto_password = randomString(6)
-     var manual_password = profilePassword
+    var auto_password = randomString(6)
+    var manual_password = profilePassword
 
-     if(checkedRadio == checkedManual)
-     {
+    if(checkedRadio == checkedManual)
+    {
          var password = manual_password
-     }
-     else if(checkedRadio == checkedAuto)
-     {
-         var password = auto_password
-     }
+    }
+    else if(checkedRadio == checkedAuto)
+    {
+        var password = auto_password
+    }
 
-     return password;
+    return password;
  }
 
 /**

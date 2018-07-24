@@ -36,7 +36,7 @@ class ProfileController extends Controller
         $days = Day::all();
 
         return view('profiles.edit')->with([
-            'profile' => $profile,
+            'profile' => $profile->load('days'),
             'days' => $days,
         ]);
     }
