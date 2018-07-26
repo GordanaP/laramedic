@@ -4,13 +4,15 @@ namespace App;
 
 use App\Observers\ProfileObserver;
 use App\Title;
+use App\Traits\Profile\HasAvatar;
 use App\Traits\Profile\HasSchedule;
 use App\Traits\Profile\HasSlug;
 use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
-    use HasSchedule,
+    use HasAvatar,
+        HasSchedule,
         HasSlug;
 
     /**
@@ -63,6 +65,16 @@ class Profile extends Model
     public function days()
     {
         return $this->belongsToMany(Day::class)->as('work')->withPivot('start_at', 'end_at');
+    }
+
+    /**
+     * Get the avatar that belongs to the profile.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar()
+    {
+        return $this->hasOne(Avatar::class);
     }
 
     /**

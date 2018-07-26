@@ -20,7 +20,7 @@ class ProfileController extends Controller
     {
         if (request()->ajax()) {
             return response([
-                'profile' => $profile->load('days')
+                'profile' => $profile->load('days', 'avatar')
             ]);
         }
     }

@@ -16,6 +16,10 @@ function removeErrorOnNewInput()
         $(this).removeClass('is-invalid');
         $(this).siblings(".invalid-feedback").hide().text('');
     });
+
+    $('input[type="file"]').click(function(){
+        $('.invalid-feedback.avatar').text("");
+    });
 }
 
 /**
@@ -712,7 +716,6 @@ function createScheduleArray(arrayName, chunkSize)
     return days;
 }
 
-
 /**
  * Get chunked array values
  *
@@ -758,53 +761,7 @@ function sortId(a,b) {
     return +a.getAttribute('id') - +b.getAttribute('id');
 }
 
-// function addRow(container, counter, maxRows)
-// {
-//     var rows = container.children();
-//     var template = rows.first();
-//     var totalRows = rows.length;
-//     var dynamicRows = rows.not(":first");
-//     var dynamicRowsIds = getIdsArray(dynamicRows);
-//     var index = getMissingValue(dynamicRowsIds);
-//     counter++;
 
-//     if (totalRows < maxRows) {
-//         var addedRow = cloneTemplate(template, container, index)
-//     }
-
-//     return addedRow;
-// }
-
-// function removeRow(button)
-// {
-//   button.parents().eq(2).remove();
-
-//   $('fieldset').each(function(i) {
-//     $(this).attr('id', i)
-//     .find('label.day').text('Day #'+(i+1)).end()
-//     .find("select").each(function(){
-//         this.name = replaceValue(this.name, i)
-//     }).end()
-//     .find(':input').each(function() {
-//         this.name = replaceValue(this.name, i)
-//     }).end()
-//     .find('.day').removeClass('day-'+(i+1)).addClass('day-'+ i).end()
-//     .find('.start').removeClass('start-'+ (i+1)).addClass('start-'+ i).end()
-//     .find('.end').removeClass('end-'+ (i+1)).addClass('end-'+ i)
-//   });
-// }
-
-// function getValuesArray(array)
-// {
-//   var tempArray = [];
-
-//   $.each(array, function(index, item)
-//   {
-//       tempArray.push(item.value);
-//   });
-
-//   return tempArray;
-// }
 
 function selectArrayValues(arrayName)
 {
@@ -831,4 +788,15 @@ function getMappedArray(arrayName)
     }).get();
 
     return values;
+}
+
+/**
+ * Set profile's avatar.
+ *
+ * @param {[type]} userAvatarFilename    [description]
+ * @param {[type]} defaultAvatarFilename [description]
+ */
+function setAvatar(avatarFilename, className)
+{
+    return '<img src="/images/avatars/'+ avatarFilename +'" class="'+className+'">';
 }

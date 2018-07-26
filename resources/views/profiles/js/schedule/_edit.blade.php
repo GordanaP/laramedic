@@ -1,9 +1,9 @@
 $(document).on('click', '#editSchedule', function() {
 
     scheduleModal.modal('show');
+    scheduleModal.find('.modal-title span').text('Edit schedule');
 
     template.remove();
-    modalTitle.text('Edit schedule');
 
     $.ajax({
         url : showProfileUrl,

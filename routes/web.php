@@ -35,41 +35,53 @@ Route::namespace('User')->name('users.')->group(function() {
 /**
  * Admin
  */
-Route::prefix('admin')->namespace('User')->name('admin.')->group(function(){
+Route::prefix('admin')->name('admin.')->group(function() {
 
-    /**
-     * Account
-     */
-    Route::resource('accounts', 'AccountController', [
-        'parameters' => ['accounts' => 'user'],
-        'only' => ['index','store', 'show', 'update', 'destroy']
-    ]);
+    // User
+    Route::namespace('User')->group(function(){
 
-    /**
-     * Profile
-     */
-    Route::get('profiles/{profile}', 'ProfileController@show')->name('profiles.show');
-    Route::get('profiles/{profile}/edit', 'ProfileController@edit')->name('profiles.edit');
-    Route::resource('/profiles', 'ProfileController', [
-        'parameters' => ['profiles' => 'user'],
-        'only' => ['update']
-    ]);
+        /**
+         * Account
+         */
+        Route::resource('accounts', 'AccountController', [
+            'parameters' => ['accounts' => 'user'],
+            'only' => ['index','store', 'show', 'update', 'destroy']
+        ]);
 
-    /**
-     * Role
-     */
-    Route::delete('/revoke-role/{user}', 'RoleController@revoke')->name('roles.revoke');
-    Route::resource('roles', 'RoleController');
+        /**
+         * Profile
+         */
+        Route::get('profiles/{profile}', 'ProfileController@show')->name('profiles.show');
+        Route::get('profiles/{profile}/edit', 'ProfileController@edit')->name('profiles.edit');
+        Route::resource('/profiles', 'ProfileController', [
+            'parameters' => ['profiles' => 'user'],
+            'only' => ['update']
+        ]);
+
+        /**
+         * Role
+         */
+        Route::delete('/revoke-role/{user}', 'RoleController@revoke')->name('roles.revoke');
+        Route::resource('roles', 'RoleController');
+    });
+
+    // Profile
+    Route::namespace('Profile')->group(function() {
+
+        /**
+         * Day
+         */
+        Route::resource('/schedule', 'DayController', [
+            'parameters' => ['schedule' => 'profile'],
+        ]);
+
+        /**
+         * Avatar
+         */
+        Route::put('admin/avatars/{profile}', 'AvatarController@update')->name('avatars.update');
+    });
 });
 
-/**
- * Day
- */
-Route::prefix('admin')->namespace('Profile')->name('admin.')->group(function(){
-    Route::resource('/schedule', 'DayController', [
-        'parameters' => ['schedule' => 'profile'],
-    ]);
-});
 
 /**
  * ActivationToken

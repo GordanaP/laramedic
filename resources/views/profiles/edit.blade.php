@@ -44,6 +44,8 @@
     @endadmcontent
 
     @include('profiles.modals._schedule')
+    @include('avatars.modals._save')
+
 @endsection
 
 @section('scripts')
@@ -54,6 +56,9 @@
 
         // Schedule
         @include('profiles.js.schedule._all');
+
+        // Avatar
+        @include('avatars.js._all');
 
     </script>
 @endsection
