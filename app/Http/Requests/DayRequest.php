@@ -29,7 +29,7 @@ class DayRequest extends FormRequest
             'end' => 'array|max:6',
             'day.*' => 'required|exists:days,index|distinct',
             'start.*' => 'nullable|date_format:H:i',
-            'end.*' => 'nullable|date_format:H:i',
+            'end.*' => 'nullable|date_format:H:i|after:start.*',
 
         ];
     }
@@ -42,6 +42,7 @@ class DayRequest extends FormRequest
             'day.*.distinct' => 'Duplicate values not allowed',
             'start.*.date_format' => 'Invalid time format',
             'end.*.date_format' => 'Invalid time format',
+            'end.*.after' => 'End must be greater than start',
         ];
     }
 }
