@@ -16,7 +16,7 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  int  $profileId
      * @return \Illuminate\Http\Response
      */
     public function show($profileId)
@@ -33,7 +33,7 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Profile  $profile
+     * @param  int  $profileId
      * @return \Illuminate\Http\Response
      */
     public function edit($profileId)
@@ -55,8 +55,8 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profile  $profile
+     * @param  \App\Http\Requests\ProfileRequest  $request
+     * @param  int  $profileId
      * @return \Illuminate\Http\Response
      */
     public function update(ProfileRequest $request, $profileId)

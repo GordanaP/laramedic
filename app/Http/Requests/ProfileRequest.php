@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Profile;
+use App\Rules\BelongsToRole;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProfileRequest extends FormRequest
@@ -23,8 +25,13 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
+        $roleIds = Profile::getProfileRolesIds($this, 'profileId');
+
         return [
-            'title' => 'sometimes|required|exists:titles,id',
+            'title' => [
+                'sometimes', 'required',
+                new BelongsToRole($roleIds),
+            ],
             'first_name' => 'sometimes|required|string|alpha_num|max:30', //the field may be absent from the form(sometimes)
             'last_name' => 'sometimes|required|string|alpha_num|max:30',
         ];

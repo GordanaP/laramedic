@@ -98,4 +98,25 @@ class Profile extends Model
 
         return $title->name;
     }
+
+    /**
+     * Get profile role ids.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return array
+     */
+    public static function getProfileRolesIds($request, $id)
+    {
+        $profileId = $request->route()->parameter($id);
+        $profile = static::find($profileId);
+
+        $roleIds = [];
+
+        foreach ($profile->user->roles as $role) {
+           array_push($roleIds, $role->id);
+        }
+
+        return $roleIds;
+    }
 }
