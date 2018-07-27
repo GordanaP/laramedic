@@ -565,15 +565,30 @@ function getRoleId(selected, lastSelected, allSelected, roles)
  * @param  {array} values
  * @return {string}        [html]
  */
-function getOptions(values)
+function getOptions(titles)
 {
    var html = '';
 
-   $.each(values, function(index, value) {
-      html += '<option value="'+ value.id +'">'+ value.name+'</option>'
+   html += '<option value="0">Select a title</option>';
+
+   $.each(titles, function(index, title) {
+      html += '<option value="'+ title.id +'">'+ title.name+'</option>';
    });
 
    return html;
+}
+
+function getRoleTitlesOptions(roles, roleId)
+{
+  var options;
+
+  $.each(roles, function(i, role) {
+       if (role.id == roleId) {
+           options =  getOptions(role.titles)
+       }
+  });
+
+  return options;
 }
 
 /**
@@ -585,9 +600,9 @@ function getOptions(values)
  * @param  {array} options
  * @return {void}
  */
-function appendOptions(selectCreate, selectEdit, placeholder, options=null)
+function appendOptions(selectCreate, selectEdit, options=null)
 {
-   selectCreate.add(selectEdit).empty().append(placeholder).append(options)
+   selectCreate.add(selectEdit).empty().append(options)
 }
 
 /**

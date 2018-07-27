@@ -2,6 +2,10 @@
 
 @section('title', ' | About')
 
+@section('links')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" />
+@endsection
+
 @section('content')
 
     @admcontent
@@ -10,10 +14,12 @@
             <!-- Title -->
             <div class="card-header admin-card-header p-3 flex align-center">
                 <h1 class="font-medium text-4xl ml-3 mb-0">
-                    {{ $profile->title_name }} {{ $profile->full_name }}
+                    <span id="profileName">
+                        {{ $profile->title_name }} {{ $profile->full_name }}
+                    </span>
                 </h1>
 
-                <button type="button" class="btn btn-success btn-lg ml-3" id="#">
+                <button type="button" class="btn btn-success btn-lg ml-3" id="editProfileName">
                     Change
                 </button>
             </div>
@@ -43,19 +49,25 @@
         @endslot
     @endadmcontent
 
-    @include('profiles.modals._schedule')
-    @include('avatars.modals._save')
+    @include('profiles.modals._schedule');
+    @include('profiles.modals._name');
+    @include('avatars.modals._save');
 
 @endsection
 
 @section('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
     <script>
 
         // Profile
-        var showProfileUrl = "{{ route('admin.profiles.show', $profile) }}";
+        var showProfileUrl = "{{ route('admin.profiles.show', $profile->id) }}";
 
         // Schedule
         @include('profiles.js.schedule._all');
+
+        // Name
+        @include('profiles.js.name._all');
 
         // Avatar
         @include('avatars.js._all');

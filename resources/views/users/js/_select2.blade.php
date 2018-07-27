@@ -34,7 +34,7 @@ selectRoles.on('select2:select', function (e) {
             var titles = response.role ? response.role.titles : '';
             var options = getOptions(titles)
 
-            appendOptions(selectTitle, selectProfileTitle, placeholder, options)
+            appendOptions(selectTitle, selectProfileTitle, options)
         }
     });
 });

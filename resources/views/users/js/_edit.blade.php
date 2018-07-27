@@ -30,15 +30,9 @@ $(document).on('click', '#editAccount', function(){
             var roles = response.user.roles;
             var roleIds = getUserRoles(roles);
             var roleId = getFirstRoleId(roleIds, roleToRemove)
-            var options;
+            var options = getRoleTitlesOptions(roles, roleId)
 
-            $.each(roles, function(i, role) {
-                 if (role.id == roleId) {
-                     options =  getOptions(role.titles)
-                 }
-            });
-
-            selectProfileTitle.empty().append(placeholder).append(options);
+            selectProfileTitle.empty().append(options);
 
             $('#firstName').val(profile.first_name);
             $('#lastName').val(profile.last_name);
