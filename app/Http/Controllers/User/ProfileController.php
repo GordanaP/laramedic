@@ -67,6 +67,8 @@ class ProfileController extends Controller
 
             $profile->user->assignProfile($request);
 
+            $profile->user->updateUserName($request);
+
             return message('The profile has been saved.');
         }
     }

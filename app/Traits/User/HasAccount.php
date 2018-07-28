@@ -17,7 +17,7 @@ trait HasAccount
         // Create account
         $user = new static;
 
-        $user->name = $data['name'];
+        $user->name = setUsername($data['first_name'], $data['last_name']);
         $user->email = $data['email'];
         $user->password = $data['password'];
 
@@ -93,6 +93,23 @@ trait HasAccount
 
         // Important for sending an email
         return $this;
+    }
+
+    /**
+     * Update the account's username.
+     * @param  array $data
+     * @return void
+     */
+    public function updateUserName($data)
+    {
+        if($data['first_name'] && $data['last_name']) {
+
+            $name = setUsername($data['first_name'], $data['last_name']);
+
+            $this->name = $name;
+
+            $this->save();
+        }
     }
 
     /**

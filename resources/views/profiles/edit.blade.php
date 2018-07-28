@@ -4,6 +4,9 @@
 
 @section('links')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" />
+    <style>
+        #profileEducation p {margin-left: 10px; color: #97a6b4; margin-bottom: 7px;}
+    </style>
 @endsection
 
 @section('content')
@@ -51,6 +54,7 @@
 
     @include('profiles.modals._schedule');
     @include('profiles.modals._name');
+    @include('profiles.modals._education');
     @include('avatars.modals._save');
 
 @endsection
@@ -62,6 +66,7 @@
 
         // Profile
         var showProfileUrl = "{{ route('admin.profiles.show', $profile->id) }}";
+        var profileUrl = "{{ route('admin.profiles.show', $profile->id) }}";
 
         // Schedule
         @include('profiles.js.schedule._all');
@@ -69,8 +74,12 @@
         // Name
         @include('profiles.js.name._all');
 
+        // Education
+        @include('profiles.js.education._all');
+
         // Avatar
         @include('avatars.js._all');
+
 
     </script>
 @endsection

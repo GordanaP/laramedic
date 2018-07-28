@@ -34,6 +34,7 @@ class ProfileRequest extends FormRequest
             ],
             'first_name' => 'sometimes|required|string|alpha_num|max:30', //the field may be absent from the form(sometimes)
             'last_name' => 'sometimes|required|string|alpha_num|max:30',
+            'education' => 'sometimes|required|max:300'
         ];
     }
 }
