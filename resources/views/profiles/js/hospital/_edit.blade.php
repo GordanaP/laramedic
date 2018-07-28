@@ -1,6 +1,6 @@
-$(document).on('click', '#changeEducation', function(e){
+$(document).on('click', '#changeHospital', function(e){
 
-   educationModal.modal('show');
+   hospitalModal.modal('show');
 
     $.ajax({
         url: profileUrl,
@@ -9,7 +9,7 @@ $(document).on('click', '#changeEducation', function(e){
         {
             var profile = response.profile;
 
-            $('#education').val(profile.education);
+            hospital.val(profile.hospital);
         }
     });
 });

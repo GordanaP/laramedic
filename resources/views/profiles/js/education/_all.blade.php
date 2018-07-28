@@ -5,10 +5,11 @@ var educationFields = ['education'];
 educationModal.setAutofocus('education');
 educationModal.emptyModal(educationFields);
 
-var education = $('#education');
-
-// Edit roles
+// Edit education
 @include('profiles.js.education._edit');
 
-// Save roles
+// Save education
 @include('profiles.js.education._save');
+
+// Delete education
+@include('profiles.js.education._delete');

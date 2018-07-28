@@ -5,7 +5,7 @@
 @section('links')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" />
     <style>
-        #profileEducation p {margin-left: 10px; color: #97a6b4; margin-bottom: 7px;}
+        #profileDetails p {margin-left: 10px; color: #97a6b4; margin-bottom: 7px;}
     </style>
 @endsection
 
@@ -54,7 +54,11 @@
 
     @include('profiles.modals._schedule');
     @include('profiles.modals._name');
+    @include('profiles.modals._specialty');
     @include('profiles.modals._education');
+    @include('profiles.modals._achievements');
+    @include('profiles.modals._hospital');
+    @include('profiles.modals._languages');
     @include('avatars.modals._save');
 
 @endsection
@@ -74,12 +78,23 @@
         // Name
         @include('profiles.js.name._all');
 
+        // Specialty
+        @include('profiles.js.specialty._all');
+
         // Education
         @include('profiles.js.education._all');
 
+        // Achievements
+        @include('profiles.js.achievements._all');
+
+        // Hospital
+        @include('profiles.js.hospital._all');
+
+        // Languages
+        @include('profiles.js.languages._all');
+
         // Avatar
         @include('avatars.js._all');
-
 
     </script>
 @endsection

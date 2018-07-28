@@ -119,4 +119,17 @@ class Profile extends Model
 
         return $roleIds;
     }
+
+    /**
+     * Delete the profile's attribute.
+     *
+     * @param  string $attribute
+     * @return void
+     */
+    public function removeAttribute($attribute)
+    {
+        $this->$attribute = '';
+
+        $this->save();
+    }
 }

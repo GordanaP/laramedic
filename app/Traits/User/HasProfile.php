@@ -36,8 +36,24 @@ trait HasProfile
             $profile->slug = $slug;
         }
 
+        if($data['specialty']) {
+            $profile->specialty = $data['specialty'];
+        }
+
         if($data['education']) {
             $profile->education = $data['education'];
+        }
+
+        if($data['achievements']) {
+            $profile->achievements = $data['achievements'];
+        }
+
+        if($data['hospital']) {
+            $profile->hospital = $data['hospital'];
+        }
+
+        if($data['languages']) {
+            $profile->languages = $data['languages'];
         }
 
         $this->profile()->save($profile);

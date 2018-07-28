@@ -1,6 +1,6 @@
 $(document).on('click', '#saveEducation', function(){
 
-    var profileEducation = education.val();
+    var profileEducation = $('#education').val();
 
     $.ajax({
         url: profileUrl,

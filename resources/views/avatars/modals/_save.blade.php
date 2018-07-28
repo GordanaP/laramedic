@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <i class="icon icon-user mr-1"></i>
+                    <i class="icon icon-picture mr-1"></i>
                     <span></span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -72,4 +72,13 @@ class ProfileController extends Controller
             return message('The profile has been saved.');
         }
     }
+
+    public function destroy(Request $request, $profileId)
+    {
+        $profile = Profile::find($profileId);
+
+        $profile->removeAttribute($request->attribute);
+
+        return message('The field content has been deleted.');
+    }
 }

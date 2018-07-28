@@ -1,10 +1,10 @@
-<div class="modal" tabindex="-1" role="dialog" id="profileEducationModal">
+<div class="modal" tabindex="-1" role="dialog" id="profileAchievementsModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
-                    <i class="icon icon-graduation mr-1"></i>
-                    <span>Edit education</span>
+                    <i class="icon icon-diamond mr-1"></i>
+                    <span>Professional achievements</span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -15,19 +15,19 @@
             <div class="modal-body">
                 <p class="required-fields mb-18">* Required field.</p>
 
-                <form id="profileEducationForm">
+                <form id="profileAchievementsForm">
                     <div class="form-group">
-                        <label for="education">Education</label>
-                        <textarea name="education" id="education" rows="5" class="form-control" placeholder="Enter education"></textarea>
+                        <label for="achievements">Achievements</label>
+                        <textarea name="achievements" id="achievements" rows="5" class="form-control" placeholder="Enter achievements"></textarea>
 
-                        <span class="invalid-feedback education"></span>
+                        <span class="invalid-feedback achievements"></span>
                     </div>
                 </form>
             </div>
 
             <!-- Buttons -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveEducation">Save changes</button>
+                <button type="button" class="btn btn-primary" id="saveAchievements">Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
