@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Page;
 
 use App\Http\Controllers\Controller;
+use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,6 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return Auth::user()->is_admin ? view('admin.dashboard') : view('home');
+        $doctors = Profile::getDoctors();
+
+        return view('home', compact('doctors'));
+        // return Auth::user()->is_admin ? view('admin.dashboard') : view('home');
+    }
+
+    public function dashboard()
+    {
+        return view('admin.dashboard');
     }
 }

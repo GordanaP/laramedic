@@ -13,3 +13,5 @@
     border-radius: 0px !important;
 }
 .mt-26 { margin-top: 26px;}
+
+.justify-between { justify-content: space-between; }

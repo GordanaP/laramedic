@@ -7,7 +7,7 @@
         <ul class="navbar-nav mr-auto">
             @admin(Auth::user())
                 <li class="nav-item p-2">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="{{ route('admin.dashboard') }}">
                         Admin Dashboard
                     </a>
                 </li>
@@ -34,6 +34,10 @@
 
                     <a href="#" class="dropdown-item">
                         <i class="fa fa-user"></i> Profile
+                    </a>
+
+                    <a href="{{ route('profiles.appointments') }}" class="dropdown-item">
+                        <i class="icon icon-calendar"></i> My schedule
                     </a>
 
                     <div class="dropdown-header">Settings</div>

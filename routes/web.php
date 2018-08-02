@@ -12,7 +12,6 @@ Route::namespace('Page')->group(function(){
     Route::get('/', 'PublicController@about')->name('welcome');
     Route::get('/about', 'PublicController@about')->name('about');
     Route::get('/contact', 'PublicController@contact')->name('contact');
-    Route::get('/home', 'HomeController@index')->name('home');
 });
 
 /**
@@ -31,11 +30,24 @@ Route::namespace('User')->name('users.')->group(function() {
     Route::put('/my-account', 'AccountController@update')->name('update');
 });
 
+Route::namespace('Profile')->name('profiles.')->group(function(){
+    /**
+     * Appointment
+     */
+    Route::get('/my-appointments', 'AppointmentController@index')->name('appointments');
+});
+
 
 /**
  * Admin
  */
 Route::prefix('admin')->name('admin.')->group(function() {
+
+    // Page
+    Route::namespace('Page')->group(function(){
+        Route::get('home', 'HomeController@index')->name('home');
+        Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
+    });
 
     // User
     Route::namespace('User')->group(function(){
@@ -77,6 +89,14 @@ Route::prefix('admin')->name('admin.')->group(function() {
          * Avatar
          */
         Route::put('admin/avatars/{profile}', 'AvatarController@update')->name('avatars.update');
+
+        /**
+         * Appointment
+         */
+        Route::get('appointments/{profile?}', 'AppointmentController@index')->name('appointments.index');
+        Route::post('appointments/{profile}', 'AppointmentController@store')->name('appointments.store');
+        Route::put('appointments/{profile}', 'AppointmentController@update')->name('appointments.update');
+        Route::delete('appointments/{profile}', 'AppointmentController@destroy')->name('appointments.destroy');
     });
 });
 

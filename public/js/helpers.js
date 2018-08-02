@@ -815,3 +815,18 @@ function setAvatar(avatarFilename, className)
 {
     return '<img src="/images/avatars/'+ avatarFilename +'" class="'+className+'">';
 }
+
+function removeAttribute(fields, attribute)
+{
+    $.each(fields, function(index, field) {
+         field.removeAttr(attribute)
+    })
+}
+
+function addAttribute(fields, attribute)
+{
+    $.each(fields, function(index, field) {
+         field.attr(attribute, true)
+    })
+}
+

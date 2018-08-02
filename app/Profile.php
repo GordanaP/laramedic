@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Appointment;
 use App\Observers\ProfileObserver;
+use App\Patient;
 use App\Title;
 use App\Traits\Profile\HasAvatar;
 use App\Traits\Profile\HasSchedule;
@@ -64,7 +66,7 @@ class Profile extends Model
      */
     public function days()
     {
-        return $this->belongsToMany(Day::class)->as('work')->withPivot('start_at', 'end_at');
+        return $this->belongsToMany(Day::class)->as('work')->withPivot('start_at', 'end_at', 'app_interval');
     }
 
     /**
@@ -75,6 +77,16 @@ class Profile extends Model
     public function avatar()
     {
         return $this->hasOne(Avatar::class);
+    }
+
+    /**
+     * Get the appointments that belong to the profile.
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
     }
 
     /**
@@ -132,4 +144,59 @@ class Profile extends Model
 
         $this->save();
     }
+
+    /**
+     * Get doctors' profiles.
+     *
+     * @return array
+     */
+    public static function getDoctors()
+    {
+        $profiles = static::with('user.roles')->get();
+        $doctors = [];
+
+        foreach ($profiles as $profile){
+
+            if ($profile->user->is_doctor) {
+
+                array_push($doctors, $profile);
+            }
+        }
+
+        return $doctors;
+    }
+
+    public static function doctorsOnDuty($start, $breakpoint, $end)
+    {
+        $today = today()->dayOfWeekIso;
+
+        if(morningShift($start, $breakpoint))
+        {
+            $profiles = static::whereHas('workdays', function ($q) use($today, $breakpoint) {
+                $q->where('start', '<', $breakpoint);
+            })->get();
+        }
+        elseif (afternoonShift($breakpoint, $end))
+        {
+            $profiles = static::whereHas('workdays', function ($q) use($today, $breakpoint) {
+                $q->where('start', '>=', $breakpoint);
+            })->get();
+        }
+
+        return $profiles->load('appointments.patient');
+    }
+
+    /**
+     * Get profiles grouped by appointments intervals
+     *
+     * @param  int  $mins
+     * @return  array
+     */
+    public static function appInterval($mins)
+    {
+        return static::with('days')->whereHas('days', function ($q) use($mins) {
+            $q->where('app_interval', '=', $mins);
+        })->get();
+    }
+
 }

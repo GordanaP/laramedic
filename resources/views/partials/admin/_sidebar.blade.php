@@ -3,7 +3,7 @@
         <li class="nav-title">Navigation</li>
 
         <li class="nav-item">
-            <a href="{{ route('home') }}" class="nav-link active">
+            <a href="{{ route('admin.dashboard') }}" class="nav-link active">
                 <i class="icon icon-speedometer"></i> Dashboard
             </a>
         </li>

@@ -59,7 +59,7 @@
     @include('profiles.modals._achievements');
     @include('profiles.modals._hospital');
     @include('profiles.modals._languages');
-    @include('avatars.modals._save');
+    @include('profiles.modals._avatar');
 
 @endsection
 
@@ -94,7 +94,7 @@
         @include('profiles.js.languages._all');
 
         // Avatar
-        @include('avatars.js._all');
+        @include('profiles.js.avatar._all');
 
     </script>
 @endsection

@@ -1,6 +1,7 @@
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/helpers.js') }}"></script>
+<script src="{{ asset('js/calendar_helpers.js') }}"></script>
 <script src="{{ asset('js/schedule_helpers.js') }}"></script>
 
 <!-- Custom scripts for this template -->
@@ -20,6 +21,5 @@
 
     $.notify("{{ session('message') }}", "{{ session('type') }}")
 </script>
-
 
 @yield('scripts')

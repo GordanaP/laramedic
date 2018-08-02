@@ -9,7 +9,7 @@ avatarModal.setAutofocus('avatar_options');
 avatarModal.emptyModal(avatarFields);
 
 // Change avatar
-@include('avatars.js._change');
+@include('profiles.js.avatar._change');
 
 // Save avatar
-@include('avatars.js._save');
+@include('profiles.js.avatar._save');

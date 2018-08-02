@@ -29,7 +29,8 @@
             "App\\": "app/"
         },
         "files": [
-            "App/Services/Helpers/general.php"
+            "App/Services/Helpers/general.php",
+            "App/Services/Helpers/appointments.php"
         ]
     },
     "autoload-dev": {

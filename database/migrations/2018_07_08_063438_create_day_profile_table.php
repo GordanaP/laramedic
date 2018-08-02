@@ -25,6 +25,7 @@ class CreateDayProfileTable extends Migration
 
             $table->string('start_at')->nullable();
             $table->string('end_at')->nullable();
+            $table->unsignedInteger('app_interval')->default(30);
 
         });
     }

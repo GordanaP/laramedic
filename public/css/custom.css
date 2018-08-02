@@ -1,4 +1,5 @@
 body { font-family: 'Roboto', sans-serif; font-size: 14px; color: #555 }
+#appContainer { min-width: 80% }
 /*.main-container {font-family: 'Roboto', sans-serif; color: #555;}*/
 
 .card { border-radius: 0 }

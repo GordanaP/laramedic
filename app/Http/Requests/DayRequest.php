@@ -42,7 +42,7 @@ class DayRequest extends FormRequest
             'day.*.distinct' => 'Duplicate values not allowed',
             'start.*.date_format' => 'Invalid time format',
             'end.*.date_format' => 'Invalid time format',
-            'end.*.after' => 'End must be greater than start',
+            'end.*.after' => 'End must be after start',
         ];
     }
 }

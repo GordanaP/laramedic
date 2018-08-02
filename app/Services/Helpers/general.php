@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 /**
  * Create the response message.
  *
@@ -58,4 +60,49 @@ function setAvatar($profile)
 function setAvatarName($userId, $file)
 {
     return $userId.'-'.$file->getClientOriginalName();
+}
+
+
+/**
+ * Get the medical record number
+ *
+ * @param  [string] $date
+ * @param  [string] $f_name
+ * @param  [string] $l_name
+ * @return [string]
+ */
+function setMedicalRecord($birthday, $f_name, $l_name)
+{
+    $day = formattedDate($birthday, 'd');
+    $month = formattedDate($birthday, 'm');
+    $year = substr(formattedDate($birthday, 'Y'), 1);
+    $f_name = strtoupper(substr($f_name, 0, 2));
+    $l_name = strtoupper(substr($l_name, 0, 2));
+
+    return $day.$month.$year.$f_name.$l_name;
+}
+
+/**
+ * Get the PHP format of the date.
+ *
+ * @param  string $date
+ * @param  string $format
+ * @return string
+ */
+function formattedDate($date, $format)
+{
+    return date($format, strtotime($date));
+}
+
+/**
+ * Get the Carbon instance of the event date.
+ *
+ * @param  string $date
+ * @param  string $time
+ * @param  string $format
+ * @return string
+ */
+function formatEventDate($date, $time, $format='Y-m-d H:i')
+{
+    return Carbon::createFromFormat($format, $date.' '.$time);
 }
