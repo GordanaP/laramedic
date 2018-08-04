@@ -25,7 +25,13 @@ function formatMomentDate(momentDate, dateFormat)
     return momentDate.format(dateFormat)
 }
 
-
+/**
+ * Determine if the date is in the past.
+ *
+ * @param  {string}  momentDate
+ * @param  {string}  dateFormat
+ * @return {Boolean}
+ */
 function isPast(momentDate, dateFormat)
 {
     var selectedDate = momentDate.format(dateFormat);
@@ -124,3 +130,59 @@ function getFullName(firstName, lastName)
   return firstName + ' ' + lastName;
 }
 
+/**
+ * Determine business hours.
+ *
+ * @param  {array} days
+ * @return {array}
+ */
+function businessHours(days)
+{
+    let tempArray = [];
+
+    for (var i = 0; i < days.length; i++) {
+
+        tempArray.push(days[i].id, days[i].work.start_at, days[i].work.end_at);
+    }
+
+    var chunks = chunkArray(tempArray, 3);
+
+    var hours = [];
+
+    for (var i = 0; i < chunks.length; i++) {
+
+        hours[i] = {
+            'dow': [chunks[i][0]],
+            'start': chunks[i][1],
+            'end': chunks[i][2],
+        }
+    }
+
+    return hours;
+}
+
+/**
+ * Determine if the selected hour is a valid business hour.
+ *
+ * @param  {array}  profileBusinessHours  [multidimensional array]
+ * @param  {string}  momentDate           [moment date]
+ * @param  {string}  timeFormat           [i.e. 00:00]
+ * @return {Boolean}
+ */
+function isProfileBusinessHour(profileBusinessHours, momentDate, dateFormat, timeFormat)
+{
+    var validDate = !isPast(momentDate, dateFormat);
+    var day = momentDate.day();
+    var time = momentDate.format(timeFormat);
+
+    for (var i = 0; i < profileBusinessHours.length; i++) {
+
+        var dow = profileBusinessHours[i].dow;
+        var validHour = dow.indexOf(day) == 0 && time >= profileBusinessHours[i].start && time < profileBusinessHours[i].end;
+
+        if(validHour)
+        {
+            return validDate ? true : alert('You selected the past date!');
+        }
+    }
+}

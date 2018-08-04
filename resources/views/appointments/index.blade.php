@@ -128,7 +128,7 @@
                             <button type="button" class="btn btn-danger" data-dismiss="modal" id="deleteApp">Delete</button>
                         </div>
                         <div>
-                            <button type="button" class="btn app-button"></button>
+                            <button type="button" class="btn app-button bg-indigo-dark text-white"></button>
                             <button type="button" class="btn close-button" data-dismiss="modal">Cancel</button>
                         </div>
                     </div>
@@ -155,18 +155,20 @@
         var dateFormat = "YYYY-MM-DD";
         var timeFormat = "HH:mm";
         var firstDay = 1;
-        var standardBusinessOpen = '09:00';
-        var standardBusinessClose = '20:00';
-        var weekendBusinessOpen = '10:00';
-        var weekendBusinessClose = '15:00';
-        var standardBusinessDays = [1,2,3,4,5];
-        var weekendBusinessDays = [6];
+        var businessOpen = '09:00';
+        var businessClose = '20:00';
+        var slotDuration = '00:20:00';
+        var profileBusinessDaysIds = "{{ optional($profile->days)->pluck('id') }}";
+        var profileBusinessDays = @json($profile->days);
+        var profileBusinessHours = businessHours(profileBusinessDays);
+
 
         // App variables
         var appointmentsUrl = "{{ route('admin.appointments.index', $profile) }}";
-        var profileName = "{{ $profile->full_name }}"
+        var profileName = "{{ $profile->full_name }}";
         var appModal = $('#appModal');
         var appModalTitle = $('#appModal .modal-title span');
+
         var doctor = $('#doctor');
         var app_date = $('#app_date');
         var app_start = $('#app_start');
@@ -177,6 +179,7 @@
         var appButton = $('.app-button');
         var deleteButton = $('#deleteApp');
         var disabledFields = [ f_name, l_name, birthday, phone ];
+
 
         // Calendar
         calendar.fullCalendar({
@@ -191,28 +194,18 @@
             handleWindowResize: true,
             displayEventTime: false,
             showNonCurrentDates: true,
-            allDaySlot:true,
             timezone: timezone,
             timeFormat: timeFormat,
+            allDaySlot:false,
             slotLabelFormat: timeFormat, // 16:00
+            slotDuration: slotDuration,
             firstDay: firstDay,
-            businessHours: [
-                {
-                    dow : standardBusinessDays,
-                    start: standardBusinessOpen,
-                    end: standardBusinessClose,
-                },
-                {
-                    dow: weekendBusinessDays,
-                    start: weekendBusinessOpen,
-                    end: weekendBusinessClose
-                }
-            ],
-            minTime: standardBusinessOpen,
-            maxTime: standardBusinessClose,
-            // selectHelper: true,
+            businessHours: profileBusinessHours,
+            minTime: businessOpen,
+            maxTime: businessClose,
             editable: true,
             selectable: true,
+            defaultTimedEventDuration: slotDuration,
             events: appointmentsUrl,
             eventDataTransform: function(event) {
 
@@ -224,10 +217,14 @@
             },
             select: function(start, end, jsEvenet, view)
             {
+                if(isProfileBusinessHour(profileBusinessHours, start, dateFormat, timeFormat))
+                {
+                    appModal.modal('show');
+                }
+
                 // Modal
-                appModal.modal('show');
                 appModalTitle.text('New appointment');
-                appButton.addClass('bg-indigo-dark text-white').text('Schedule appointment').attr('id', 'storeApp');
+                appButton.text('Schedule appointment').attr('id', 'storeApp');
                 deleteButton.hide();
                 removeAttribute(disabledFields, 'disabled');
 
@@ -244,7 +241,7 @@
                 // Modal
                 appModal.modal('show');
                 appModalTitle.text('Edit appointment');
-                appButton.text('Reschedule appointment').removeClass('bg-indigo-dark').addClass('bg-orange text-white').attr('id', 'updateApp').val(event.id);
+                appButton.text('Reschedule appointment').attr('id', 'updateApp').val(event.id);
                 deleteButton.show().val(event.id);
                 addAttribute(disabledFields, 'disabled');
 
@@ -263,9 +260,8 @@
                 phone.val(patient.phone);
                 app_date.val(appDate);
                 app_start.val(appStart);
-            }
+            },
         });
-
 
         // Store app
         $(document).on('click', '#storeApp', function(){
