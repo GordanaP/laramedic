@@ -38,7 +38,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">
-                            <i class="icon icon-event mr-1"></i>
+                            <i class="icon mr-1"></i>
                             <span class="ls-1"></span>
                         </h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -61,7 +61,7 @@
                                         <label for="app_date">Date</label>
                                         <input type="text" name="app_date" id="app_date" class="form-control rounded-none" placeholder="yyyy-mm-dd" />
 
-                                        <span class="invalid-feedback app_date"></span>
+                                        <span class="invalid-feedback date"></span>
                                     </div>
                                 </div>
 
@@ -71,7 +71,7 @@
                                         <label for="app_start">Time: <span id="app-time-label"></span></label>
                                         <input type="text" name="app_start" id="app_start" class="form-control rounded-none" placeholder="hh:mm" />
 
-                                        <span class="invalid-feedback app_start"></span>
+                                        <span class="invalid-feedback start_at"></span>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                         <label for="f_name">First name</label>
                                         <input type="text" name="f_name" id="f_name" class="form-control rounded-none" placeholder="Enter first name" />
 
-                                        <span class="invalid-feedback f_name"></span>
+                                        <span class="invalid-feedback first_name"></span>
                                     </div>
                                 </div>
 
@@ -95,7 +95,7 @@
                                         <label for="l_name">Last name</label>
                                         <input type="text" name="l_name" id="l_name" class="form-control rounded-none" placeholder="Enter last name" />
 
-                                        <span class="invalid-feedback l_name"></span>
+                                        <span class="invalid-feedback last_name"></span>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
                                         <label for="phone">Phone number</label>
                                         <input type="text" name="phone" id="phone" class="form-control rounded-none" placeholder="Enter phone number" />
 
-                                        <span class="invalid-feedback name phone"></span>
+                                        <span class="invalid-feedback phone"></span>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="modal-footer flex justify-between">
                         <div>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="deleteApp">Delete</button>
+                            <button type="button" class="btn btn-danger delete-app-button" data-dismiss="modal" id="deleteApp">Delete</button>
                         </div>
                         <div>
                             <button type="button" class="btn app-button bg-indigo-dark text-white"></button>
@@ -167,7 +167,6 @@
         var appointmentsUrl = "{{ route('admin.appointments.index', $profile) }}";
         var profileName = "{{ $profile->full_name }}";
         var appModal = $('#appModal');
-        var appModalTitle = $('#appModal .modal-title span');
 
         var doctor = $('#doctor');
         var app_date = $('#app_date');
@@ -176,10 +175,11 @@
         var l_name = $('#l_name');
         var birthday = $('#birthday');
         var phone = $('#phone');
-        var appButton = $('.app-button');
-        var deleteButton = $('#deleteApp');
         var disabledFields = [ f_name, l_name, birthday, phone ];
+        var invalidFeedbackFields = ['date', 'start_at', 'first_name', 'last_name', 'birthday', 'phone' ];
 
+        appModal.setAutofocus('#app_date');
+        appModal.emptyModal(invalidFeedbackFields);
 
         // Calendar
         calendar.fullCalendar({
@@ -215,18 +215,11 @@
 
                 return event;
             },
-            select: function(start, end, jsEvenet, view)
+            select: function(start, end, jsEvent, view)
             {
-                if(isProfileBusinessHour(profileBusinessHours, start, dateFormat, timeFormat))
-                {
-                    appModal.modal('show');
-                }
-
                 // Modal
-                appModalTitle.text('New appointment');
-                appButton.text('Schedule appointment').attr('id', 'storeApp');
-                deleteButton.hide();
-                removeAttribute(disabledFields, 'disabled');
+                isValidBusinessHour(profileBusinessHours, start, dateFormat, timeFormat)
+                    ? openScheduleAppModal(appModal,disabledFields) : '';
 
                 // Form
                 var appDate = formatMomentDate(start, dateFormat)
@@ -239,13 +232,7 @@
             eventClick: function(event, jsEvent, view) {
 
                 // Modal
-                appModal.modal('show');
-                appModalTitle.text('Edit appointment');
-                appButton.text('Reschedule appointment').attr('id', 'updateApp').val(event.id);
-                deleteButton.show().val(event.id);
-                addAttribute(disabledFields, 'disabled');
-
-                appModal.emptyModal();
+                openRescheduleAppModal(appModal,disabledFields, event.id)
 
                 // Form
                 var patient = event.patient;
@@ -283,6 +270,10 @@
                 {
                     calendar.fullCalendar('refetchEvents');
                     successResponse(appModal, response.message);
+                },
+                error: function(response)
+                {
+                    errorResponse(appModal, jsonErrors(response))
                 }
             });
         });
@@ -302,8 +293,13 @@
                 data: data,
                 success: function(response)
                 {
+                    console.log(response)
                     calendar.fullCalendar('refetchEvents');
                     successResponse(appModal, response.message);
+                },
+                error: function(response)
+                {
+                    errorResponse(appModal, jsonErrors(response))
                 }
             });
         });

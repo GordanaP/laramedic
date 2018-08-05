@@ -199,4 +199,43 @@ class Profile extends Model
         })->get();
     }
 
+    /**
+     * The doctor is at work.
+     *
+     * @param  string  $date
+     * @return boolean
+     */
+    public function isWorkingOn($date)
+    {
+        $profileBusinessDays = $this->days->pluck('name');
+
+        $selectedDay = getFormattedDay($date);
+
+        return $profileBusinessDays->contains($selectedDay);
+    }
+
+    /**
+     * Determine if the time is working hour.
+     *
+     * @param  string $date
+     * @param  string $time
+     * @return string
+     */
+    public function isProfileBusinessHour($date, $time)
+    {
+        $selectedDay = getFormattedDay($date, 'w');
+
+        $profileBusinessDay = $this->days()->where('day_id', $selectedDay)->first();
+
+        return $profileBusinessDay ? $time >= $profileBusinessDay->work->start_at && $time < $profileBusinessDay->work->end_at : '';
+    }
+
+    public function isAvailableForAppointment($date, $time)
+    {
+        $appDate = formatEventDate($date, $time);
+        $app = $this->appointments()->where('start_at', $appDate)->first();
+
+        return ! optional($app)->exists;
+    }
+
 }

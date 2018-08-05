@@ -75,3 +75,16 @@ function workingHours($start, $breakpoint, $end)
 
     return $filteredHours->all();
 }
+
+/**
+ * Get a past year
+ *
+ * @param  string $day
+ * @param  int $years
+ * @param  string $format
+ * @return string
+ */
+function pastYears($day, $years, $format='Y-m-d')
+{
+    return $day->subYears($years)->format($format);
+}

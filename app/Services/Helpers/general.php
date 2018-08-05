@@ -28,6 +28,7 @@ function setUsername($first_name, $last_name)
     return strtolower(substr($first_name, 0, 1)).strtolower($last_name);
 }
 
+
 /**
  * Get full name.
  *
@@ -105,4 +106,14 @@ function formattedDate($date, $format)
 function formatEventDate($date, $time, $format='Y-m-d H:i')
 {
     return Carbon::createFromFormat($format, $date.' '.$time);
+}
+
+/**
+ * Set a weekday.
+ *
+ * @param string $format
+ */
+function getFormattedDay($date, $format='l')
+{
+    return date($format, strtotime($date));
 }

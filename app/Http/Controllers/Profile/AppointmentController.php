@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Appointment;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AppointmentRequest;
 use App\Patient;
 use App\Profile;
 use Carbon\Carbon;
@@ -46,7 +47,7 @@ class AppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Profile $profile)
+    public function store(AppointmentRequest $request, Profile $profile)
     {
         Appointment::createNew($request, $profile);
 
@@ -82,7 +83,7 @@ class AppointmentController extends Controller
      * @param  \App\Appointment  $appointment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(AppointmentRequest $request, Profile $profile)
     {
         Appointment::saveChanges($request);
 

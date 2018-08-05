@@ -169,11 +169,12 @@ function businessHours(days)
  * @param  {string}  timeFormat           [i.e. 00:00]
  * @return {Boolean}
  */
-function isProfileBusinessHour(profileBusinessHours, momentDate, dateFormat, timeFormat)
+function isValidBusinessHour(profileBusinessHours, momentDate, dateFormat, timeFormat)
 {
     var validDate = !isPast(momentDate, dateFormat);
     var day = momentDate.day();
     var time = momentDate.format(timeFormat);
+    var alertText = 'You selected the past date!';
 
     for (var i = 0; i < profileBusinessHours.length; i++) {
 
@@ -182,7 +183,28 @@ function isProfileBusinessHour(profileBusinessHours, momentDate, dateFormat, tim
 
         if(validHour)
         {
-            return validDate ? true : alert('You selected the past date!');
+            return validDate ? true : alert(alertText);
         }
     }
+}
+
+function openScheduleAppModal(modal, disabledFields)
+{
+    modal.modal('show');
+    modal.find('.modal-title .icon').removeClass('icon-event').addClass('icon-calendar');
+    modal.find('.modal-title span').text('New appointment');
+    modal.find('.app-button').text('Schedule appointment').attr('id', 'storeApp');
+    modal.find('.delete-app-button').hide();
+    removeAttribute(disabledFields, 'disabled');
+}
+
+function openRescheduleAppModal(modal, disabledFields, appointmentId)
+{
+    modal.modal('show');
+    modal.find('.modal-title .icon').removeClass('icon-calendar').addClass('icon-event');
+    modal.find('.modal-title span').text('Edit appointment');
+    modal.find('.app-button').text('Reschedule appointment').attr('id', 'updateApp').val(appointmentId);
+    modal.find('.delete-app-button').show().val(appointmentId);
+    addAttribute(disabledFields, 'disabled');
+
 }
